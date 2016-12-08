@@ -37,6 +37,10 @@ function pagination(){
         $(".pagination ul").append($pageListItem);
 
     }
+
+    $(document).ready(function(){
+        $(".pagination a:contains(1)").addClass("active");
+    });
     //Click event bound to pagination links
     $(".pagination a").click(function(){
         $(".student-item").hide();
@@ -45,12 +49,14 @@ function pagination(){
         $(this).addClass("active");  //Add active class to currently clicked link
         var startIndex = (currentPage * 10) - 10;
         var endIndex = currentPage * 10;
-        $(".student-item").slice(startIndex, endIndex).show();  //Show 10 students per page using start and end index
+
 
         //If results array isn't empty then show ten per page
         if (results.length > 1){
             $(".student-item").hide();
             $(results).slice(startIndex, endIndex).show();
+        } else {
+            $(".student-item").slice(startIndex, endIndex).show();  //Show 10 students per page using start and end index
         }
 
     });
@@ -61,6 +67,9 @@ function pagination(){
 //Function enabling live search
 function search(){
     $("input").keyup(function(){  //On keyup in search bar (input)
+        $(".pagination a").removeClass("active");
+        $(".pagination a:contains(1)").addClass("active");
+
         $(".student-item").hide();
 
         //Set results array to empty
